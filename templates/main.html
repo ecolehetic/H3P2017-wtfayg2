@@ -40,22 +40,16 @@
     <li><a href="users/other" data-filter="other">Others</a></li>
   </ul>  
   <ul class="users">
+    <?php
+    foreach($data as $user):
+    ?>
         <li> 
-          <a href="user/1">François Pumir</a>
-          <a href="favorite/1" class="favon"><i class="icon-star"></i></a>
+          <a href="user/<?php echo $user['id'] ?>"><?php echo $user['firstname'].' '.$user['lastname']; ?></a>
+          <a href="favorite/<?php echo $user['id'] ?>" class="favon"><i class="icon-star"></i></a>
         </li>
-        <li> 
-          <a href="user/1">François Pumir</a>
-          <a href="favorite/1" class="favon"><i class="icon-star"></i></a>
-        </li>
-        <li> 
-          <a href="user/1">François Pumir</a>
-          <a href="favorite/1" class="favon"><i class="icon-star"></i></a>
-        </li>
-        <li> 
-          <a href="user/1">François Pumir</a>
-          <a href="favorite/1" class="favon"><i class="icon-star"></i></a>
-        </li>
+    <?php
+    endforeach;
+    ?> 
   </ul>
   </section>
   <section id="user">
