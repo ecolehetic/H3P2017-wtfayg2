@@ -55,10 +55,14 @@
   </ul>
   </section>
   <section id="user">
-    
-    <h1>Francois Pumir</h1>
-    <h2>Salle 4</h2>
-   
+    <?php
+    if(isset($one)):
+    ?>
+    <h1><?php echo $one->firstname.' ' .$one->lastname; ?></h1>
+    <h2><?php echo $one->spotWifi ?></h2>
+   <?php
+   endif;
+   ?>
   </section>
   
 </body>
