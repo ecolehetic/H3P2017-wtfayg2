@@ -41,6 +41,7 @@
   </ul>  
   <ul class="users">
     <?php
+    if(isset($data)):
     foreach($data as $user):
     ?>
         <li> 
@@ -49,6 +50,7 @@
         </li>
     <?php
     endforeach;
+    endif;
     ?> 
   </ul>
   </section>
