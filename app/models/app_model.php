@@ -5,18 +5,29 @@ class app_model{
   private $dB;
   
   function __construct(){
-    $this->dB=new DB\SQL('mysql:host=127.0.0.1;port=3306;dbname=wtfay','root','');
+    $f3=Base::instance();
+    $this->dB=new DB\SQL('mysql:host='.$f3->get('db_host').';port='.$f3->get('db_port').';dbname='.$f3->get('db_name'),
+    $f3->get('db_login'),$f3->get('db_password'));
   }
   
   function getUsers($params){
-    return $this->getMapper('wifiloc')->find(array('promo=?',$params['promo']));
+    return $this->getMapper()->find(array('promo=?',$params['promo']));
   }
   
   function getUser($params){
-    return $this->getMapper('wifiloc')->load(array('id=?',$params['id']));
+    return $this->getMapper()->load(array('id=?',$params['id']));
   }
   
-  private function getMapper($table){
+  function search($name){
+    $query=array(
+      'firstname LIKE :name1 or lastname LIKE :name2',
+      ':name1'=>'%'.$name.'%',
+      ':name2'=>'%'.$name.'%'
+    );
+    return $this->getMapper()->find($query,array('order'=>'lastname'));
+  }
+  
+  private function getMapper($table='wifiloc'){
     return new DB\SQL\Mapper($this->dB,$table);
   }
   

@@ -10,7 +10,8 @@ class app_controller{
     $this->model=new app_model();
   }
   
-  function home(){
+  function home($f3){
+   
   }
   
   function getUsers($f3,$params){
@@ -19,6 +20,10 @@ class app_controller{
   
   function  getUser($f3,$params){
     $f3->set('one',$this->model->getUser($params));
+  }
+  
+  function search($f3){
+    $f3->set('data',$this->model->search($f3->get('POST.name')));
   }
   
   function afterroute(){
