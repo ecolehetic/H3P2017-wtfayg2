@@ -8,7 +8,10 @@ class app_controller{
   private $model;
   
   function __construct(){
-    $this->tpl='main.html';
+    $this->tpl=array(
+      'sync'=>'main.html',
+      'async'=>''
+    );
     $this->model=new \APP\MODELS\app_model();
   }
   
@@ -18,6 +21,7 @@ class app_controller{
   
   function getUsers($f3,$params){
     $f3->set('data',$this->model->getUsers($params));
+    $this->tpl['async']='partials/users.html';
   }
   
   function  getUser($f3,$params){
@@ -29,8 +33,16 @@ class app_controller{
     //echo $this->model->log();
   }
   
-  function afterroute(){
-    echo \View::instance()->render($this->tpl);
+  function afterroute($f3){
+    $tpl=$f3->get('AJAX')?$this->tpl['async']:$this->tpl['sync'];
+    echo \View::instance()->render($tpl);
+    
+    /*if($f3->get('AJAX')){
+      echo \View::instance()->render($this->tpl['async']);
+    }else{
+      echo \View::instance()->render($this->tpl['sync']);
+    }*/
+    
   }
   
   
