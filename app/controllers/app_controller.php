@@ -39,7 +39,17 @@ class app_controller{
   
   public function upload($f3){
     \Web::instance()->receive(function($file){},true,false);
-    
+  }
+  
+  public function request($f3){
+    $options=array(
+      'header' => array(
+        'Authorization: token c05569a93130fe8a817455c703d109218eccc1c5'
+      )
+    );
+    $response=\Web::instance()->request('https://api.github.com/repos/fpumir/wtfay/issues',$options);
+    print_r(json_decode($response['body']));
+    exit;
   }
   
   function afterroute($f3){
