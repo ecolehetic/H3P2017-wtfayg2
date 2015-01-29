@@ -36,8 +36,7 @@ input[name="name"]{margin:1em;font-family:'Arapey', serif;border-radius:.3em;pad
 section{float:left;width:30%;overflow:auto;background-color:#fff;height:92%;}
 section + section {margin-top:0;padding:0;background-color:transparent;width:69%;}
 #user i{font-size: 12em;position: absolute;left: 60%;color: #fff;opacity:0;}
-#user.dragover {opacity:.4;background-color:#994242;}
-#user.dragover i{opacity:1;}
+#user.dragover {border:5px dashed #fff;}
 section h1 {color:#fff;margin:1em 0 -6em 2em;text-transform:uppercase;font-weight:normal;}
 section h2 {color:#fff;font-size:10em;font-family:'Arapey';margin-left:.3em;font-weight:normal;}
 #signin{width:30%;margin:5em auto 0 auto;}

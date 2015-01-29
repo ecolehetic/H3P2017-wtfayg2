@@ -6,6 +6,7 @@ class app_controller{
   
   private $tpl;
   private $model;
+  private $dataset;
   
   function __construct(){
     $this->tpl=array(
@@ -20,12 +21,14 @@ class app_controller{
   }
   
   function getUsers($f3,$params){
-    $f3->set('data',$this->model->getUsers($params));
+    $this->dataset=$this->model->getUsers($params);
+    $f3->set('data',$this->dataset);
     $this->tpl['async']='partials/users.html';
   }
   
   function  getUser($f3,$params){
-    $f3->set('one',$this->model->getUser($params));
+    $this->dataset=$this->model->getUser($params);
+    $f3->set('one',$this->dataset);
   }
   
   function search($f3){
@@ -34,16 +37,33 @@ class app_controller{
     //echo $this->model->log();
   }
   
+  public function upload($f3){
+    \Web::instance()->receive(function($file){},true,false);
+    
+  }
+  
   function afterroute($f3){
-    $tpl=$f3->get('AJAX')?$this->tpl['async']:$this->tpl['sync'];
-    echo \View::instance()->render($tpl);
-    
-    /*if($f3->get('AJAX')){
-      echo \View::instance()->render($this->tpl['async']);
-    }else{
-      echo \View::instance()->render($this->tpl['sync']);
-    }*/
-    
+    if(isset($_GET['format'])&&$_GET['format']=='json'){
+      if(is_array($this->dataset)){
+        $this->dataset=array_map(function($data){return $data->cast();},$this->dataset);
+      }elseif(is_object($this->dataset)){
+        $this->dataset=$this->dataset->cast();
+      }else{
+        $this->dataset=array('error'=>'no dataset');
+      }
+      
+      if(isset($_GET['callback'])){
+        header('Content-Type: application/javascript');
+        echo $_GET['callback'].'('.json_encode($this->dataset).')';
+      }else{
+        header('Content-Type: application/json');
+        echo json_encode($this->dataset);
+      }
+    }
+    else{
+      $tpl=$f3->get('AJAX')?$this->tpl['async']:$this->tpl['sync'];
+      echo \View::instance()->render($tpl);
+    }
   }
   
   
