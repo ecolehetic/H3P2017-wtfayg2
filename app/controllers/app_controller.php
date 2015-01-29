@@ -30,6 +30,7 @@ class app_controller{
   
   function search($f3){
     $f3->set('data',$this->model->search($f3->get('POST.name')));
+    $this->tpl['async']='partials/users.html';
     //echo $this->model->log();
   }
   
