@@ -4,7 +4,7 @@ namespace APP\MODELS;
 
 class app_model{
   
-  private $dB;
+  public $dB;
   
   function __construct(){
     $f3=\Base::instance();
@@ -27,6 +27,10 @@ class app_model{
       ':name2'=>'%'.$name.'%'
     );
     return $this->getMapper()->find($query,array('order'=>'lastname'));
+  }
+  
+  public function signin($params){
+    return $this->getMapper()->load(array('userId=:login',':login'=>$params['login']));
   }
   
   private function getMapper($table='wifiloc'){
